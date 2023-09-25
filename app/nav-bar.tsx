@@ -22,6 +22,10 @@ const Nav = () => {
                 title: "Projects",
               },
               {
+                route: "/search",
+                title: "Search",
+              },
+              {
                 route: "#",
                 title: "Profile",
               },
