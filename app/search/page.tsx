@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import Project from "../components/Project";
+import Prisma from "@prisma/client";
 
 const SearchPage = () => {
   const [search, setSearch] = useState("");
-  const [queriedProjects, setQueriedProjects] = useState<any[]>([]);
+  const [queriedProjects, setQueriedProjects] = useState<Prisma.Project[]>([]);
 
   const fetchSearchedProjects = async (e) => {
     e.preventDefault();
@@ -12,10 +13,13 @@ const SearchPage = () => {
       const response = await fetch(`/api/v1/projects?search=${search}`, {
         method: "GET",
       });
-      if (!response.ok)
+
+      if (!response.ok) {
         throw new Error(`${response.status}: (${response.statusText})`);
+      }
+
       const body = await response.json();
-      setQueriedProjects(body.projects);
+      setQueriedProjects(body.projects as Prisma.Project[]);
     } catch (err) {
       console.error(err);
     }
