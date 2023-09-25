@@ -1,9 +1,11 @@
 "use client";
 
 import Prisma from "@prisma/client";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const EditButton = ({ id, project }: {id: string, project: Prisma.Project}) => {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
 
   const handleEdit = async () => {
@@ -33,6 +35,11 @@ const EditButton = ({ id, project }: {id: string, project: Prisma.Project}) => {
 
       if (!response.ok)
         throw new Error(`${response.status}: (${response.statusText})`);
+      else {
+        setShowModal(false);
+        router.push(`/projects/${id}`);
+        router.refresh();
+      }
     } catch (err) {
       console.error(err);
     }
