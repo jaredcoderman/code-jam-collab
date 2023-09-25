@@ -34,12 +34,12 @@ const DeleteButton = (props: DeleteProps) => {
   };
 
   return (
-    <div
+    <button
       className="border bg-black px-3 py-2 rounded-md w-fit text-white"
       onClick={handleDelete}
     >
       Delete
-    </div>
+    </button>
   );
 };
 
