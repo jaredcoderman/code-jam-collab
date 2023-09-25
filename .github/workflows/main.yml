@@ -7,10 +7,16 @@ on:
       - main
 
 jobs:
-  enforce_format:
-    name: Enforce Prettier formatting
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Check Prettier
-        uses: creyD/prettier_action@v4.3
+  prettier:
+    - name: Check out repo
+      uses: actions/checkout@v2
+    - uses: actions/cache@v2
+      name: Configure npm caching
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/workflows/prettier.yml') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-
+    - name: Run prettier
+      run: |-
+        npx prettier . --check
